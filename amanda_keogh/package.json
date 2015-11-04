@@ -1,0 +1,26 @@
+{
+  "name": "simple-http-server",
+  "version": "1.0.0",
+  "description": "A simple http server for code fellows' sea-d45 javascript development accelerator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akeogh/create_an_http_server.git"
+  },
+  "author": "Amanda Keogh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akeogh/create_an_http_server/issues"
+  },
+  "homepage": "https://github.com/akeogh/create_an_http_server#readme",
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "chai-http": "^1.0.0",
+    "gulp": "^3.9.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.3"
+  }
+}
