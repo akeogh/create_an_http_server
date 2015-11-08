@@ -1,34 +1,36 @@
+'use strict'
 var http = require('http');
 var fs = require('fs');
+var respond = require(__dirname + "/lib/respond");
 
 var server = http.createServer(function(req, res) {
+
   if (req.url === '/') {
-    respond(200, 'text/html', 'hello root!');
+    respond(res, 200, 'text/html', fs.readFileSync('index.html'));
+  }
+
+  if (req.url === '/style.css') {
+    respond(res, 200, 'text.html', fs.readFileSync('style.css'));
   }
 
   if (req.url === '/time') {
-    var d = new Date()
-    respond(200, 'text/html', d.getTime().toString());
+    var time = new Date();
+    time = time.getTime().toString();
+    respond(res, 200, 'text/html', 'The current robot time is: ' + time);
   }
 
-  if(req.url.includes('/name')) {
+  if(req.url.substring(0, 5) === ('/name')) {
+    var name;
     if(req.method === 'GET') {
-      respond(200, 'text/html', 'hello name (get)!');
+      name = req.url.substring(6) || "world";
+      respond(res, 200, 'text/html', 'Hello ' + name + '!');
     } else if (req.method === 'POST') {
-      console.log('acknowledged');
-      respond(200, 'application/JSON', JSON.stringify({hello: "JSON!"}));
+      req.on('data', function(data) {
+        var name = (JSON.parse(data.toString())['name']);
+        respond(res, 200, 'text/html', 'Hello ' + name + '!');
+      });
     }
   }
-
-  function respond(status, contentType, data) {
-    res.writeHead(status, {
-      'Content-Type': contentType
-    });
-    res.write(data || 'not found');
-
-    res.end();
-  }
-
 });
 
 server.listen(3000, function() {

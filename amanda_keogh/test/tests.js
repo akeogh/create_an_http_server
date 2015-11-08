@@ -7,13 +7,14 @@ var fs = require('fs');
 var server = require(__dirname + "/../server");
 
 describe('a root request', function() {
-  it('should return an html string', function() {
+  it('should return an html string', function(done) {
     chai.request('localhost:3000')
       .get('/')
       .end(function(err, res) {
         expect(err).to.eql(null);
-
-      })
+        expect(res).to.have.status(200);
+      done();
+      });
   });
 });
 
@@ -32,8 +33,7 @@ describe('the server time request', function() {
         expect(res).to.have.status(200);
         expect(res.text).to.be.above(this.testTime);
         done();
-      }).bind(this);
+      }.bind(this));
   });
 
 });
-
